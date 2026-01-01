@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Brawl Stars Nightmare</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #0e0e0e;
+    color: #eee;
+    padding: 30px;
+}
+select, button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px 0;
+    width: 260px;
+}
+#result {
+    margin-top: 25px;
+    font-size: 18px;
+    color: #00ff99;
+    white-space: pre-line;
+}
+</style>
+</head>
+
+<body onload="suggest()">
+
+<h1>Brawler suggestion</h1>
+<p>Select the enemy team:</p>
+
+<select id="enemy1"></select><br>
+<select id="enemy2"></select><br>
+<select id="enemy3"></select><br>
+
+<button onclick="suggest()">Suggest Picks</button>
+
+<div id="result"></div>
+
+<script>
+// === FULL BRAWLER LIST (easy to update) ===
+const brawlers = [
+"None",
+"8-Bit","Amber","Ash","Barley","Bea","Belle","Bibi","Bo","Bonnie","Bull",
+"Carl","Charlie","Chester","Chuck","Colette","Colt","Cordelius","Crow",
+"Darryl","Doug","Dynamike","Edgar","El Primo","EMZ","Eve","Fang","Frank","Gale",
+"Gene","Gray","Griff","Grom","Hank","Jacky","Janet","Jessie","Kit",
+"Larry & Lawrie","Leon","Lola","Lou","Maisie","Mandy","Max","Meg","Mico",
+"Mortis","Mr. P","Nani","Otis","Pam","Pearl","Penny","Piper","Poco",
+"R-T","Rico","Rosa","Sam","Sandy","Shelly","Spike","Sprout","Squeak",
+"Stu","Surge","Tara","Tick","Willow"
+];
+
+// populate dropdowns
+["enemy1","enemy2","enemy3"].forEach(id => {
+    const select = document.getElementById(id);
+    brawlers.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.toLowerCase();
+        opt.textContent = b;
+        select.appendChild(opt);
+    });
+});
+
+function suggest() {
+    const enemies = [
+        enemy1.value,
+        enemy2.value,
+        enemy3.value
+    ];
+
+    let picks = new Set();
+
+    enemies.forEach(enemy => {
+
+        // === ASSASSINS ===
+        if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
+            picks.add("Shelly");
+            picks.add("Gale");
+            picks.add("Otis");
+        }
+
+        // === TANKS ===
+        else if (
+            enemy === "frank" || enemy === "bull" || enemy === "el primo" ||
+            enemy === "rosa" || enemy === "jacky" || enemy === "hank"
+        ) {
+            picks.add("Colette");
+            picks.add("Spike");
+            picks.add("Shelly");
+        }
+
+		else if (enemy === "emz") {
+			picks.add("Piper");
+			picks.add("Belle");
+			picks.add("Mortis");
+		}
+
+        // === THROWERS ===
+        else if (
+            enemy === "tick" || enemy === "dynamike" || enemy === "barley" ||
+            enemy === "sprout" || enemy === "grom" || enemy === "willow" ||
+            enemy === "larry & lawrie"
+        ) {
+            picks.add("Mortis");
+            picks.add("Edgar");
+            picks.add("Mico");
+        }
+
+        // === SNIPERS ===
+        else if (
+            enemy === "piper" || enemy === "belle" || enemy === "mandy" ||
+            enemy === "nani"
+        ) {
+            picks.add("Mortis");
+            picks.add("Leon");
+            picks.add("Edgar");
+        }
+
+        // === HEALERS / SUSTAIN ===
+        else if (enemy === "pam" || enemy === "poco" || enemy === "doug") {
+            picks.add("Crow");
+            picks.add("Spike");
+        }
+
+        // === CONTROL / MID ===
+        else if (
+            enemy === "gene" || enemy === "sandy" || enemy === "tara" ||
+            enemy === "mr. p" || enemy === "gray"
+        ) {
+            picks.add("Crow");
+            picks.add("Spike");
+            picks.add("Belle");
+        }
+
+        // === DAMAGE DEALERS ===
+        else if (
+            enemy === "colt" || enemy === "rico" || enemy === "griff" ||
+            enemy === "pearl" || enemy === "amber"
+        ) {
+            picks.add("Spike");
+            picks.add("Belle");
+        }
+    });
+
+    // === FALLBACK PICKS ===
+    if (picks.size === 0) {
+        picks.add("Spike");
+        picks.add("Belle");
+        picks.add("Shelly");
+    }
+
+    document.getElementById("result").innerText =
+        "Recommended Picks:\n• " + [...picks].join("\n• ");
+}
+</script>
+
+</body>
+</html>
