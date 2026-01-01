@@ -23,6 +23,23 @@ select, button {
     color: #00ff99;
     white-space: pre-line;
 }
+
+	/* Mobile-specific styles */
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 20px; /* bigger base text */
+        padding: 15px;
+    }
+    select, button {
+        font-size: 18px; /* bigger dropdowns/buttons */
+        padding: 15px;
+        width: 100%; /* full width on mobile */
+    }
+    #result {
+        font-size: 22px; /* bigger result text */
+    }
+}
+
 </style>
 </head>
 
@@ -159,3 +176,4 @@ function suggest() {
 
 </body>
 </html>
+
