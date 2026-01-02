@@ -29,7 +29,7 @@ select, button {
 </style>
 </head>
 
-<body onload="suggest()">
+<body>
 
 <h1>Brawler suggestion</h1>
 <p>Select map type:</p>
@@ -39,9 +39,9 @@ select, button {
 </select><br><br>
 
 <p>Select the enemy team:</p>
-<select id="enemy1"></select><br>
-<select id="enemy2"></select><br>
-<select id="enemy3"></select><br>
+<select id="enemy1" onchange="updateDropdowns(); suggest()"></select><br>
+<select id="enemy2" onchange="updateDropdowns(); suggest()"></select><br>
+<select id="enemy3" onchange="updateDropdowns(); suggest()"></select><br>
 
 <button onclick="suggest()">Suggest Picks</button>
 
@@ -72,6 +72,24 @@ const brawlers = [
     });
 });
 
+    // === prevent duplicate selection ===
+function updateDropdowns() {
+    const selected = new Set([
+        enemy1.value,
+        enemy2.value,
+        enemy3.value
+    ]);
+
+    ["enemy1","enemy2","enemy3"].forEach(id => {
+        const select = document.getElementById(id);
+        for (let i = 0; i < select.options.length; i++) {
+            const opt = select.options[i];
+            if (opt.value === "none") continue; // None mag altijd
+            opt.disabled = selected.has(opt.value) && opt.value !== select.value;
+        }
+    });
+}
+    
 function suggest() {
     const enemies = [
         enemy1.value,
@@ -184,8 +202,15 @@ function suggest() {
     document.getElementById("result").innerText =
         "Recommended Picks:\n• " + [...picks].join("\n• ");
 }
+
+    // === initial load ===
+window.onload = function() {
+    updateDropdowns();
+    suggest();
+};
 </script>
 
 </body>
 </html>
+
 
