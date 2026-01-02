@@ -197,15 +197,17 @@ function suggest() {
         }
     });
 
+    
     // === FALLBACK PICKS ===
     if (picks.size === 0) {
         picks.add("Spike");
-        picks.add("Belle");
+        picks.add("Edgar");
+        picks.add("Piper");
         picks.add("Shelly");
     }
 
     // Minimaal 3 picks
-    const fallbackPicks = ["Spike", "Belle", "Shelly"];
+    const fallbackPicks = ["Spike", "Edgar", "Piper", "Shelly"];
     while (picks.size < 3) {
         for (let b of fallbackPicks) {
             picks.add(b);
@@ -226,6 +228,7 @@ window.onload = function() {
 
 </body>
 </html>
+
 
 
 
