@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="apple-touch-icon" href="icon.png">
-<title>Brawlers Nightmare</title>
+<title>Brawler Nightmare</title>
 
 <style>
 body {
@@ -248,7 +248,14 @@ const LANE_BRAWLERS = [
   "Trunk"
 ];
 
-
+// === ROLE LOOKUP ===
+function getRole(brawler){
+    const name = brawler.toLowerCase();
+    if(MID_BRAWLERS.includes(name)) return "Center";
+    if(LANE_BRAWLERS.includes(name)) return "Lane";
+    return "Flex"; // should rarely happen now
+}
+	
 // populate dropdowns
 ["enemy1","enemy2","enemy3"].forEach(id => {
     const select = document.getElementById(id);
@@ -436,6 +443,7 @@ window.onload = () => {
 
 </body>
 </html>
+
 
 
 
