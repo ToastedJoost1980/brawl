@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <link rel="apple-touch-icon" href="icon.png">
-
 <title>Brawl Stars Nightmare</title>
 
 <style>
@@ -11,14 +10,14 @@ body {
     font-family: Arial, sans-serif;
     background: #0e0e0e;
     color: #eee;
-    font-size: 50px; /* bigger base text */
+    font-size: 50px;
     padding: 15px;
 }
-select, button {
+select {
     padding: 25px;
     font-size: 50px;
     margin: 20px 0;
-    width:400px;
+    width: 400px;
 }
 #result {
     margin-top: 20px;
@@ -38,11 +37,9 @@ select, button {
 </select><br><br>
 
 <p>Select the enemy team:</p>
-<select id="enemy1" onchange="updateDropdowns(); suggest()"></select><br>
-<select id="enemy2" onchange="updateDropdowns(); suggest()"></select><br>
-<select id="enemy3" onchange="updateDropdowns(); suggest()"></select><br>
-
-<button onclick="suggest()">Suggest Picks</button>
+<select id="enemy1"></select><br>
+<select id="enemy2"></select><br>
+<select id="enemy3"></select><br>
 
 <div id="result"></div>
 
@@ -51,13 +48,26 @@ select, button {
 const brawlers = [
 "None",
 "8-Bit","Amber","Ash","Barley","Bea","Belle","Bibi","Bo","Bonnie","Bull",
-"Carl","Charlie","Chester","Chuck","Colette","Colt","Cordelius","Crow",
+"Carl","Charlie","Chester","Chuck","Clancy","Colette","Colt","Cordelius","Crow",
 "Darryl","Doug","Dynamike","Edgar","El Primo","EMZ","Eve","Fang","Frank","Gale",
 "Gene","Gray","Griff","Grom","Hank","Jacky","Janet","Jessie","Kit",
 "Larry & Lawrie","Leon","Lola","Lou","Maisie","Mandy","Max","Meg","Mico",
 "Mortis","Mr. P","Nani","Otis","Pam","Pearl","Penny","Piper","Poco",
 "R-T","Rico","Rosa","Sam","Sandy","Shelly","Spike","Sprout","Squeak",
 "Stu","Surge","Tara","Tick","Willow"
+];
+
+// === ROLE DEFINITIONS ===
+const MID_BRAWLERS = [
+"gene","sandy","tara","mr. p","lou","r-t",
+"pam","belle","spike","poco","max"
+];
+
+const LANE_BRAWLERS = [
+"carl","rosa","bibi","sam","ash",
+"edgar","mortis","leon",
+"piper","bea","mandy",
+"bull","jacky","el primo","colette","clancy"
 ];
 
 // populate dropdowns
@@ -71,7 +81,7 @@ const brawlers = [
     });
 });
 
-    // === prevent duplicate selection ===
+// prevent duplicate selection
 function updateDropdowns() {
     const selected = new Set([
         enemy1.value,
@@ -82,11 +92,8 @@ function updateDropdowns() {
     ["enemy1","enemy2","enemy3"].forEach(id => {
         const select = document.getElementById(id);
         const currentValue = select.value;
-
-        // clear alle opties
         select.innerHTML = "";
 
-        // voeg alleen opties toe die nog niet in andere dropdowns geselecteerd zijn
         brawlers.forEach(b => {
             const val = b.toLowerCase();
             if (val === "none" || val === currentValue || !selected.has(val)) {
@@ -97,144 +104,142 @@ function updateDropdowns() {
             }
         });
 
-        // restore huidige selectie als die nog steeds bestaat
-        if ([...select.options].some(o => o.value === currentValue)) {
-            select.value = currentValue;
-        }
+        select.value = currentValue;
     });
 }
-    
-function suggest() {
-    const enemies = [
-        enemy1.value,
-        enemy2.value,
-        enemy3.value
-    ];
 
-    const mapType = document.getElementById("mapType").value; // "open" of "closed"
+function suggest() {
+    const enemies = [enemy1.value, enemy2.value, enemy3.value];
+    const mapType = document.getElementById("mapType").value;
+
     let picks = new Set();
+    let laneCount = 0;
+    let midCount = 0;
+
+    function addPick(brawler) {
+        if (!picks.has(brawler)) {
+            picks.add(brawler);
+            if (LANE_BRAWLERS.includes(brawler.toLowerCase())) laneCount++;
+            if (MID_BRAWLERS.includes(brawler.toLowerCase())) midCount++;
+        }
+    }
 
     enemies.forEach(enemy => {
 
-        // === ASSASSINS ===
         if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
-            picks.add("Shelly");
-            picks.add("Gale");
-            picks.add("Otis");
+            addPick("Shelly");
+            addPick("Gale");
+            addPick("Otis");
         }
 
-        // === TANKS ===
         else if (
             enemy === "frank" || enemy === "bull" || enemy === "el primo" ||
-            enemy === "rosa" || enemy === "jacky" || enemy === "hank"
+            enemy === "rosa" || enemy === "jacky" || enemy === "hank" || enemy === "clancy"
         ) {
-            picks.add("Colette");
-            picks.add("Spike");
-            picks.add("Shelly");
-            picks.add("Rico");
+            addPick("Colette");
+            addPick("Spike");
+            addPick("Shelly");
+            addPick("Rico");
         }
 
         else if (enemy === "emz") {
-            // op closed maps geen snipers
             if (mapType !== "closed") {
-                picks.add("Piper");
-                picks.add("Belle");
+                addPick("Piper");
+                addPick("Belle");
             } else {
-                picks.add("Mortis");
-                picks.add("Spike");
-                picks.add("Shelly");
+                addPick("Mortis");
+                addPick("Spike");
+                addPick("Shelly");
             }
         }
 
-        // === THROWERS ===
         else if (
             enemy === "tick" || enemy === "dynamike" || enemy === "barley" ||
             enemy === "sprout" || enemy === "grom" || enemy === "willow" ||
             enemy === "larry & lawrie"
         ) {
-            picks.add("Mortis");
-            picks.add("Edgar");
-            picks.add("Mico");
+            addPick("Mortis");
+            addPick("Edgar");
+            addPick("Mico");
         }
 
-        // === SNIPERS ===
         else if (
-            enemy === "piper" || enemy === "belle" || enemy === "mandy" ||
-            enemy === "nani"
+            enemy === "piper" || enemy === "belle" || enemy === "mandy" || enemy === "nani"
         ) {
-            if (mapType !== "closed") { // alleen snipers op open maps
-                picks.add("Mortis");
-                picks.add("Leon");
-                picks.add("Edgar");
-            } else { // closed map → short-range alternatieven
-                picks.add("Spike");
-                picks.add("Shelly");
+            if (mapType !== "closed") {
+                addPick("Mortis");
+                addPick("Leon");
+                addPick("Edgar");
+            } else {
+                addPick("Spike");
+                addPick("Shelly");
             }
         }
 
-        // === HEALERS / SUSTAIN ===
         else if (enemy === "pam" || enemy === "poco" || enemy === "doug") {
-            picks.add("Crow");
-            picks.add("Spike");
+            addPick("Crow");
+            addPick("Spike");
         }
 
-        // === CONTROL / MID ===
         else if (
             enemy === "gene" || enemy === "sandy" || enemy === "tara" ||
             enemy === "mr. p" || enemy === "gray"
         ) {
-            picks.add("Crow");
-            picks.add("Spike");
-            picks.add("Piper");
+            addPick("Crow");
+            addPick("Spike");
+            if (mapType !== "closed") addPick("Piper");
         }
 
-        // === DAMAGE DEALERS ===
         else if (
             enemy === "colt" || enemy === "rico" || enemy === "griff" ||
             enemy === "pearl" || enemy === "amber"
         ) {
-            picks.add("Spike");
-            picks.add("Piper");
+            addPick("Spike");
+            if (mapType !== "closed") addPick("Piper");
         }
     });
 
-    
-    // === FALLBACK PICKS ===
+    // === ROLE-AWARE FALLBACK ===
+    const CLOSED_LANE = ["Shelly","Colette","Clancy","Rosa"];
+    const CLOSED_MID  = ["Spike","Pam","Lou"];
+    const OPEN_LANE   = ["Crow","Carl","Bea"];
+    const OPEN_MID    = ["Spike","Gene","Belle"];
+
+    const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
+    const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
+
     if (picks.size === 0) {
-        picks.add("Spike");
-        picks.add("Edgar");
-        picks.add("Piper");
+        addPick(fallbackMid[0]);
+        addPick(fallbackLane[0]);
+        addPick(fallbackLane[1]);
     }
 
-    // Minimaal 3 picks
-    const fallbackPicks = ["Spike", "Edgar", "Piper"];
     while (picks.size < 3) {
-        for (let b of fallbackPicks) {
-            picks.add(b);
-            if (picks.size >= 3) break;
+        if (midCount === 0) {
+            fallbackMid.forEach(b => addPick(b));
+        } else {
+            fallbackLane.forEach(b => addPick(b));
         }
     }
 
     document.getElementById("result").innerText =
-        "Recommended Picks:\n• " + [...picks].join("\n• ");
+        "Recommended Picks:\n• " + [...picks].slice(0,3).join("\n• ");
 }
 
-    // === initial load ===
-window.onload = function() {
+// init
+window.onload = () => {
     updateDropdowns();
     suggest();
 };
+
+// auto update
+["enemy1","enemy2","enemy3","mapType"].forEach(id => {
+    document.getElementById(id).addEventListener("change", () => {
+        updateDropdowns();
+        suggest();
+    });
+});
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
