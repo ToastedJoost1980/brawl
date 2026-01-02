@@ -31,7 +31,7 @@ select, button {
 
 <body>
 
-<h1>Brawler suggestion</h1>
+<h1>Brawler suggestions</h1>
 <p>Select map type:</p>
 <select id="mapType">
     <option value="open">Open Map</option>
@@ -82,10 +82,25 @@ function updateDropdowns() {
 
     ["enemy1","enemy2","enemy3"].forEach(id => {
         const select = document.getElementById(id);
-        for (let i = 0; i < select.options.length; i++) {
-            const opt = select.options[i];
-            if (opt.value === "none") continue; // None mag altijd
-            opt.disabled = selected.has(opt.value) && opt.value !== select.value;
+        const currentValue = select.value;
+
+        // clear alle opties
+        select.innerHTML = "";
+
+        // voeg alleen opties toe die nog niet in andere dropdowns geselecteerd zijn
+        brawlers.forEach(b => {
+            const val = b.toLowerCase();
+            if (val === "none" || val === currentValue || !selected.has(val)) {
+                const opt = document.createElement("option");
+                opt.value = val;
+                opt.textContent = b;
+                select.appendChild(opt);
+            }
+        });
+
+        // restore huidige selectie als die nog steeds bestaat
+        if ([...select.options].some(o => o.value === currentValue)) {
+            select.value = currentValue;
         }
     });
 }
@@ -212,5 +227,6 @@ window.onload = function() {
 
 </body>
 </html>
+
 
 
