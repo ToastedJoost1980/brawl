@@ -60,7 +60,7 @@ const brawlers = [
 // === ROLE DEFINITIONS ===
 const MID_BRAWLERS = [
   "8-bit", "amber", "ash", "bea", "belle", "bo", "byron", "crow",
-  "darryl", "dynamike", "emz", "gale", "gene", "glowbert", "grom", "jasper",
+  "darryl", "dynamike", "emz", "gene", "glowbert", "grom", "jasper",
   "lola", "lou", "lumi", "max", "melodie", 
   "mr. p", "nani", "pam", "poco", "puff",
   "sandy", "spike", "tara"
@@ -139,11 +139,15 @@ function suggest() {
 
     enemies.forEach(enemy => {
 
-        if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
-            addPick("Shelly");
-            addPick("Gale");
-            addPick("Otis");
-        }
+		if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
+			addPick("Shelly"); // strong close-range burst
+			addPick("Gale");   // mid-range control, knockback
+			if (mapType !== "closed") {
+				addPick("Spike");    // safe ranged poke on open maps
+			} else {
+				addPick("Colette");  // melee-range burst on tight/closed maps
+			}
+		}
 
         else if (
             enemy === "frank" || enemy === "bull" || enemy === "el primo" ||
@@ -259,8 +263,6 @@ window.onload = () => {
 
 </body>
 </html>
-
-
 
 
 
