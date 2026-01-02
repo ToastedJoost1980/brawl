@@ -9,8 +9,7 @@ body {
     font-family: Arial, sans-serif;
     background: #0e0e0e;
     color: #eee;
-    padding: 30px;
-	font-size: 40px; /* bigger base text */
+    font-size: 40px; /* bigger base text */
     padding: 15px;
 }
 select, button {
@@ -24,19 +23,20 @@ select, button {
     font-size: 40px;
     color: #00ff99;
     white-space: pre-line;
-	
 }
-
-
-
 </style>
 </head>
 
 <body onload="suggest()">
 
 <h1>Brawler suggestion</h1>
-<p>Select the enemy team:</p>
+<p>Select map type:</p>
+<select id="mapType">
+    <option value="open">Open Map</option>
+    <option value="closed">Closed Map</option>
+</select><br><br>
 
+<p>Select the enemy team:</p>
 <select id="enemy1"></select><br>
 <select id="enemy2"></select><br>
 <select id="enemy3"></select><br>
@@ -46,7 +46,7 @@ select, button {
 <div id="result"></div>
 
 <script>
-// === FULL BRAWLER LIST (easy to update) ===
+// === FULL BRAWLER LIST ===
 const brawlers = [
 "None",
 "8-Bit","Amber","Ash","Barley","Bea","Belle","Bibi","Bo","Bonnie","Bull",
@@ -77,6 +77,7 @@ function suggest() {
         enemy3.value
     ];
 
+    const mapType = document.getElementById("mapType").value; // "open" of "closed"
     let picks = new Set();
 
     enemies.forEach(enemy => {
@@ -98,11 +99,17 @@ function suggest() {
             picks.add("Shelly");
         }
 
-		else if (enemy === "emz") {
-			picks.add("Piper");
-			picks.add("Belle");
-			picks.add("Mortis");
-		}
+        else if (enemy === "emz") {
+            picks.add("Mortis");
+            // op closed maps geen snipers
+            if (mapType !== "closed") {
+                picks.add("Piper");
+                picks.add("Belle");
+            } else {
+                picks.add("Spike");
+                picks.add("Shelly");
+            }
+        }
 
         // === THROWERS ===
         else if (
@@ -120,9 +127,14 @@ function suggest() {
             enemy === "piper" || enemy === "belle" || enemy === "mandy" ||
             enemy === "nani"
         ) {
-            picks.add("Mortis");
-            picks.add("Leon");
-            picks.add("Edgar");
+            if (mapType !== "closed") { // alleen snipers op open maps
+                picks.add("Mortis");
+                picks.add("Leon");
+                picks.add("Edgar");
+            } else { // closed map → short-range alternatieven
+                picks.add("Spike");
+                picks.add("Shelly");
+            }
         }
 
         // === HEALERS / SUSTAIN ===
@@ -158,6 +170,15 @@ function suggest() {
         picks.add("Shelly");
     }
 
+    // Minimaal 3 picks
+    const fallbackPicks = ["Spike", "Belle", "Shelly"];
+    while (picks.size < 3) {
+        for (let b of fallbackPicks) {
+            picks.add(b);
+            if (picks.size >= 3) break;
+        }
+    }
+
     document.getElementById("result").innerText =
         "Recommended Picks:\n• " + [...picks].join("\n• ");
 }
@@ -165,8 +186,3 @@ function suggest() {
 
 </body>
 </html>
-
-
-
-
-
