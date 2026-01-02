@@ -134,12 +134,12 @@ function suggest() {
         }
 
         else if (enemy === "emz") {
-            picks.add("Mortis");
             // op closed maps geen snipers
             if (mapType !== "closed") {
                 picks.add("Piper");
                 picks.add("Belle");
             } else {
+                picks.add("Mortis");
                 picks.add("Spike");
                 picks.add("Shelly");
             }
@@ -227,6 +227,7 @@ window.onload = function() {
 
 </body>
 </html>
+
 
 
 
