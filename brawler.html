@@ -25,6 +25,25 @@ select {
     color: #00ff99;
     white-space: pre-line;
 }
+    /* === FORCE PORTRAIT EXPERIENCE === */
+@media screen and (orientation: landscape) {
+    body {
+        display: none;
+    }
+
+    html::before {
+        content: "Please rotate your device to portrait 📱";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 40px;
+        color: #00ff99;
+        background: #0e0e0e;
+        text-align: center;
+        padding: 40px;
+    }
+}
 </style>
 </head>
 
@@ -243,3 +262,4 @@ window.onload = () => {
 
 </body>
 </html>
+
