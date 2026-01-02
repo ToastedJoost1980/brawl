@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="apple-touch-icon" href="icon.png">
-<title>Brawlers Nightmare</title>
+<title>Brawler Nightmare</title>
 
 <style>
 body {
@@ -46,8 +46,7 @@ select {
 <script>
 // === FULL BRAWLER LIST ===
 const brawlers = [
-  "None",
- "None",
+"None",
   "8-Bit",
   "Alli",
   "Amber",
@@ -148,103 +147,103 @@ const brawlers = [
 
 // === MID / CENTER BRAWLERS ===
 const MID_BRAWLERS = [
-  "8-bit",
-  "amber",
-  "ash",
-  "barley",
-  "belle",
-  "bo",
-  "byron",
-  "crow",
-  "darryl",
-  "doug",
-  "emz",
-  "eve",
-  "finx",
-  "gene",
-  "gigi",
-  "gray",
-  "griff",
-  "grom",
-  "gus",
-  "janet",
-  "juju",
-  "kit",
-  "lily",
-  "lola",
-  "lou",
-  "lumi",
-  "maisie",
-  "mandy",
-  "max",
-  "meg",
-  "meeple",
-  "melodie",
-  "mico",
-  "mr. p",
-  "nani",
-  "pam",
-  "poco",
-  "r-t",
-  "sandy",
-  "spike",
-  "tara",
-  "willow",
-  "ziggy"
+  "8-Bit",
+  "Amber",
+  "Ash",
+  "Barley",
+  "Belle",
+  "Bo",
+  "Byron",
+  "Crow",
+  "Darryl",
+  "Doug",
+  "EMZ",
+  "Eve",
+  "Finx",
+  "Gene",
+  "Gigi",
+  "Gray",
+  "Griff",
+  "Grom",
+  "Gus",
+  "Janet",
+  "Juju",
+  "Kit",
+  "Lily",
+  "Lola",
+  "Lou",
+  "Lumi",
+  "Maisie",
+  "Mandy",
+  "Max",
+  "Meg",
+  "Meeple",
+  "Melodie",
+  "Mico",
+  "Mr. P",
+  "Nani",
+  "Pam",
+  "Poco",
+  "R-T",
+  "Sandy",
+  "Spike",
+  "Tara",
+  "Willow",
+  "Ziggy"
 ];
 
 // === LANE BRAWLERS ===
 const LANE_BRAWLERS = [
-  "alli",
-  "angelo",
-  "bea",
-  "berry",
-  "bibi",
-  "bonnie",
-  "brock",
-  "buzz",
-  "carl",
-  "charlie",
-  "chester",
-  "chuck",
-  "clancy",
-  "colette",
-  "colt",
-  "cordelius",
-  "draco",
-  "dynamike",
-  "edgar",
-  "el primo",
-  "fang",
-  "frank",
-  "gale",
-  "hank",
-  "jacky",
-  "jessie",
-  "kenji",
-  "kaze",
-  "larry & lawrie",
-  "leon",
-  "nita",
-  "ollie",
-  "otis",
-  "pearl",
-  "penny",
-  "pierce",
-  "piper",
-  "rico",
-  "rosa",
-  "ruffs",
-  "sam",
-  "shade",
-  "shelly",
-  "shock",
-  "sprout",
-  "squeak",
-  "stu",
-  "surge",
-  "tick",
-  "trunk"
+  "Alli",
+  "Angelo",
+  "Bea",
+  "Berry",
+  "Bibi",
+  "Bonnie",
+  "Brock",
+  "Buzz",
+  "Carl",
+  "Charlie",
+  "Chester",
+  "Chuck",
+  "Clancy",
+  "Colette",
+  "Colt",
+  "Cordelius",
+  "Draco",
+  "Dynamike",
+  "Edgar",
+  "El Primo",
+  "Fang",
+  "Frank",
+  "Gale",
+  "Hank",
+  "Jacky",
+  "Jessie",
+  "Kenji",
+  "Kaze",
+  "Larry & Lawrie",
+  "Leon",
+  "Nita",
+  "Ollie",
+  "Otis",
+  "Pearl",
+  "Penny",
+  "Pierce",
+  "Piper",
+  "Rico",
+  "Rosa",
+  "Ruffs",
+  "Sam",
+  "Shade",
+  "Shelly",
+  "Shock",
+  "Sprout",
+  "Squeak",
+  "Stu",
+  "Surge",
+  "Tick",
+  "Trunk"
 ];
 
 
@@ -286,6 +285,13 @@ function updateDropdowns() {
     });
 }
 
+function getRole(brawler) {
+    const name = brawler.toLowerCase();
+    if (MID_BRAWLERS.includes(name)) return "Center";
+    if (LANE_BRAWLERS.includes(name)) return "Lane";
+    return "Flex";
+}
+
 function suggest() {
     const enemies = [enemy1.value, enemy2.value, enemy3.value];
     const mapType = document.getElementById("mapType").value;
@@ -304,84 +310,89 @@ function suggest() {
 
     enemies.forEach(enemy => {
 
-        if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
-            addPick("Shelly");
-            addPick("Gale");
-            addPick("Otis");
+    if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
+        addPick("shelly"); // strong close-range burst
+        addPick("gale");   // mid-range control, knockback
+        if (mapType !== "closed") {
+            addPick("spike");    // safe ranged poke on open maps
+        } else {
+            addPick("colette");  // melee-range burst on tight/closed maps
         }
+    }
 
-        else if (
-            enemy === "frank" || enemy === "bull" || enemy === "el primo" ||
-            enemy === "rosa" || enemy === "jacky" || enemy === "hank" || enemy === "clancy"
-        ) {
-            addPick("Colette");
-            addPick("Spike");
-            addPick("Shelly");
-            addPick("Rico");
-        }
+    else if (
+        enemy === "frank" || enemy === "bull" || enemy === "el primo" ||
+        enemy === "rosa" || enemy === "jacky" || enemy === "hank" || enemy === "clancy"
+    ) {
+        addPick("colette");
+        addPick("spike");
+        addPick("shelly");
+        addPick("rico");
+    }
 
-        else if (enemy === "emz") {
-            if (mapType !== "closed") {
-                addPick("Piper");
-                addPick("Belle");
-            } else {
-                addPick("Mortis");
-                addPick("Spike");
-                addPick("Shelly");
-            }
+    else if (enemy === "emz") {
+        if (mapType !== "closed") {
+            addPick("piper");
+            addPick("belle");
+        } else {
+            addPick("mortis");
+            addPick("spike");
+            addPick("shelly");
         }
+    }
 
-        else if (
-            enemy === "tick" || enemy === "dynamike" || enemy === "barley" ||
-            enemy === "sprout" || enemy === "grom" || enemy === "willow" ||
-            enemy === "larry & lawrie"
-        ) {
-            addPick("Mortis");
-            addPick("Edgar");
-            addPick("Mico");
-        }
+    else if (
+        enemy === "tick" || enemy === "dynamike" || enemy === "barley" ||
+        enemy === "sprout" || enemy === "grom" || enemy === "willow" ||
+        enemy === "larry & lawrie"
+    ) {
+        addPick("mortis");
+        addPick("edgar");
+        addPick("mico");
+    }
 
-        else if (
-            enemy === "piper" || enemy === "belle" || enemy === "mandy" || enemy === "nani"
-        ) {
-            if (mapType !== "closed") {
-                addPick("Mortis");
-                addPick("Leon");
-                addPick("Edgar");
-            } else {
-                addPick("Spike");
-                addPick("Shelly");
-            }
+    else if (
+        enemy === "piper" || enemy === "belle" || enemy === "mandy" || enemy === "nani"
+    ) {
+        if (mapType !== "closed") {
+            addPick("mortis");
+            addPick("leon");
+            addPick("edgar");
+        } else {
+            addPick("spike");
+            addPick("shelly");
         }
+    }
 
-        else if (enemy === "pam" || enemy === "poco" || enemy === "doug") {
-            addPick("Crow");
-            addPick("Spike");
-        }
+    else if (enemy === "pam" || enemy === "poco" || enemy === "doug") {
+        addPick("crow");
+        addPick("spike");
+    }
 
-        else if (
-            enemy === "gene" || enemy === "sandy" || enemy === "tara" ||
-            enemy === "mr. p" || enemy === "gray"
-        ) {
-            addPick("Crow");
-            addPick("Spike");
-            if (mapType !== "closed") addPick("Piper");
-        }
+    else if (
+        enemy === "gene" || enemy === "sandy" || enemy === "tara" ||
+        enemy === "mr. p" || enemy === "gray"
+    ) {
+        addPick("crow");
+        addPick("spike");
+        if (mapType !== "closed") addPick("piper");
+    }
 
-        else if (
-            enemy === "colt" || enemy === "rico" || enemy === "griff" ||
-            enemy === "pearl" || enemy === "amber"
-        ) {
-            addPick("Spike");
-            if (mapType !== "closed") addPick("Piper");
-        }
-    });
+    else if (
+        enemy === "colt" || enemy === "rico" || enemy === "griff" ||
+        enemy === "pearl" || enemy === "amber"
+    ) {
+        addPick("spike");
+        if (mapType !== "closed") addPick("piper");
+    }
+});
+
 
     // === ROLE-AWARE FALLBACK ===
     const CLOSED_LANE = ["Shelly","Colette","Clancy","Rosa"];
-    const CLOSED_MID  = ["Spike","Pam","Lou"];
-    const OPEN_LANE   = ["Crow","Carl","Bea"];
-    const OPEN_MID    = ["Spike","Gene","Belle"];
+    const CLOSED_MID  = ["Spike","Jacky","Poco"];
+    const OPEN_LANE   = ["Piper","Edgar","Mandy"];
+    const OPEN_MID    = ["Spike","Mr. P","EMZ"];
 
     const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
     const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
@@ -401,13 +412,10 @@ function suggest() {
     }
 
     document.getElementById("result").innerText =
-      "Recommended Picks:\n• " +
-      [...picks].map(b => {
-          const role = getRole(b); // use getRole function
-          // capitalize first letter for display
-          const displayName = b.charAt(0).toUpperCase() + b.slice(1);
-          return `${displayName} (${role})`;
-      }).join("\n• ");
+    "Recommended Picks:\n• " +
+    [...picks]
+        .map(b => `${b} (${getRole(b)})`)
+        .join("\n• ");
 }
 
 // init
@@ -427,6 +435,18 @@ window.onload = () => {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
