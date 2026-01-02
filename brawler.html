@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="apple-touch-icon" href="icon.png">
-<title>Brawler Nightmare</title>
+<title>Brawlers Nightmare</title>
 
 <style>
 body {
@@ -127,6 +127,13 @@ function updateDropdowns() {
     });
 }
 
+function getRole(brawler) {
+    const name = brawler.toLowerCase();
+    if (MID_BRAWLERS.includes(name)) return "Center";
+    if (LANE_BRAWLERS.includes(name)) return "Lane";
+    return "Flex";
+}
+
 function suggest() {
     const enemies = [enemy1.value, enemy2.value, enemy3.value];
     const mapType = document.getElementById("mapType").value;
@@ -242,7 +249,10 @@ function suggest() {
     }
 
     document.getElementById("result").innerText =
-        "Recommended Picks:\n• " + [...picks].slice(0,3).join("\n• ");
+    "Recommended Picks:\n• " +
+    [...picks]
+        .map(b => `${b} (${getRole(b)})`)
+        .join("\n• ");
 }
 
 // init
@@ -262,6 +272,7 @@ window.onload = () => {
 
 </body>
 </html>
+
 
 
 
