@@ -184,7 +184,7 @@ function suggest() {
         ) {
             picks.add("Crow");
             picks.add("Spike");
-            picks.add("Belle");
+            picks.add("Piper");
         }
 
         // === DAMAGE DEALERS ===
@@ -193,7 +193,7 @@ function suggest() {
             enemy === "pearl" || enemy === "amber"
         ) {
             picks.add("Spike");
-            picks.add("Belle");
+            picks.add("Piper");
         }
     });
 
@@ -203,11 +203,10 @@ function suggest() {
         picks.add("Spike");
         picks.add("Edgar");
         picks.add("Piper");
-        picks.add("Shelly");
     }
 
     // Minimaal 3 picks
-    const fallbackPicks = ["Spike", "Edgar", "Piper", "Shelly"];
+    const fallbackPicks = ["Spike", "Edgar", "Piper"];
     while (picks.size < 3) {
         for (let b of fallbackPicks) {
             picks.add(b);
@@ -228,6 +227,7 @@ window.onload = function() {
 
 </body>
 </html>
+
 
 
 
