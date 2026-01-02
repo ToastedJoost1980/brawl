@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="apple-touch-icon" href="icon.png">
-<title>Brawlers Nightmare</title>
+<title>Brawler Nightmare</title>
 
 <style>
 body {
@@ -227,9 +227,9 @@ function suggest() {
 
     // === ROLE-AWARE FALLBACK ===
     const CLOSED_LANE = ["Shelly","Colette","Clancy","Rosa"];
-    const CLOSED_MID  = ["Spike","Mr. P","Poco"];
+    const CLOSED_MID  = ["Spike","Jacky","Poco"];
     const OPEN_LANE   = ["Crow","Edgar","Mandy"];
-    const OPEN_MID    = ["Spike","Gene","Piper"];
+    const OPEN_MID    = ["Spike","Mr. P","Piper"];
 
     const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
     const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
@@ -272,6 +272,7 @@ window.onload = () => {
 
 </body>
 </html>
+
 
 
 
