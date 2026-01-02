@@ -113,8 +113,6 @@ const brawlers = [
   "Meeple",
   "Melodie",
   "Mico",
-  "Mina",
-  "Mortis",
   "Mr. P",
   "Nani",
   "Nita",
@@ -248,14 +246,7 @@ const LANE_BRAWLERS = [
   "Trunk"
 ];
 
-// === ROLE LOOKUP ===
-function getRole(brawler){
-    const name = brawler.toLowerCase();
-    if(MID_BRAWLERS.includes(name)) return "Center";
-    if(LANE_BRAWLERS.includes(name)) return "Lane";
-    return "Flex";
-}
-	
+
 // populate dropdowns
 ["enemy1","enemy2","enemy3"].forEach(id => {
     const select = document.getElementById(id);
@@ -397,10 +388,10 @@ function suggest() {
     });
 
     // === ROLE-AWARE FALLBACK ===
-	const CLOSED_LANE = ["shelly","colette","clancy","rosa"];
-	const CLOSED_MID  = ["spike","jacky","poco"];
-	const OPEN_LANE   = ["piper","edgar","mandy"];
-	const OPEN_MID    = ["spike","mr. p","emz"];
+    const CLOSED_LANE = ["Shelly","Colette","Clancy","Rosa"];
+    const CLOSED_MID  = ["Spike","Jacky","Poco"];
+    const OPEN_LANE   = ["Piper","Edgar","Mandy"];
+    const OPEN_MID    = ["Spike","Mr. P","EMZ"];
 
     const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
     const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
@@ -443,8 +434,6 @@ window.onload = () => {
 
 </body>
 </html>
-
-
 
 
 
