@@ -152,11 +152,8 @@ function suggest() {
             addPick("colette");  // melee-range burst on tight/closed maps
         }
     }
-	
-
-
     else if (
-        enemy === "frank" || enemy === "bull" || enemy === "el primo" ||
+        enemy === "frank" || enemy === "bull" || enemy === "el primo" || enemy === "meg" ||  
         enemy === "rosa" || enemy === "jacky" || enemy === "hank" || enemy === "clancy" || enemy === "trunk" 
     ) {
         addPick("Colette");
@@ -231,8 +228,62 @@ function suggest() {
         enemy === "colt" || enemy === "rico" || enemy === "griff" ||
         enemy === "pearl" || enemy === "amber"
     ) {
+		addPick("Crow");
         addPick("Spike");
         if (mapType !== "closed") addPick("Piper");
+    }
+	else if (enemy === "ash") {
+        addPick("Shelly");
+        addPick("Spike");
+		addPick("Colette");
+    }
+	else if (enemy === "bea") {
+        addPick("Mortis");
+        addPick("Edgar");
+		addPick("Crow");
+    }
+	else if (enemy === "bea") {
+        addPick("Mortis");
+        addPick("Edgar");
+		addPick("Crow");
+    }
+	else if (enemy === "bo") {
+        addPick("Mortis");
+        addPick("Edgar");
+    }
+	else if (enemy === "bea") {
+        addPick("Mortis");
+        addPick("Edgar");
+		addPick("Crow");
+    }
+	else if (enemy === "bonnie") {
+        addPick("Spike");
+        addPick("Shelly");
+		addPick("Surge");
+    }
+	else if (enemy === "bonnie") {
+        addPick("Spike");
+        addPick("Shelly");
+		addPick("Surge");
+    }
+	else if (enemy === "crow") {
+        if (mapType !== "closed") {
+            addPick("Piper");
+            addPick("Mandy");
+        } else {
+            addPick("Shelly");
+            addPick("Surge");
+        }
+    }
+	else if (enemy === "8-bit") {
+        addPick("Griff");
+        addPick("Edgar");
+		addPick("Mortis");
+    }
+	else if (enemy === "mortis") {
+        addPick("Shelly");
+        addPick("Bull");
+		addPick("Surge");
     }
 });
 
@@ -241,7 +292,7 @@ function suggest() {
     const CLOSED_LANE = ["Shelly","Mortis","Edgar","Shade"];
     const CLOSED_MID  = ["Spike","Jacky","Poco"];
     const OPEN_LANE   = ["Piper","Edgar","Mandy"];
-    const OPEN_MID    = ["Mr. P","Piper","EMZ"];
+    const OPEN_MID    = ["Spike","Mr. P","EMZ"];
 
     const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
     const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
@@ -284,3 +335,18 @@ window.onload = () => {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
