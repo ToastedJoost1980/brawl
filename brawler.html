@@ -10,28 +10,6 @@ body {
     font-family: Arial, sans-serif;
     background: #0e0e0e;
     color: #eee;
-    font-size: 50px;
-    padding: 15px;
-}
-select {
-    padding: 25px;
-    font-size: 50px;
-    margin: 20px 0;
-    width: 400px;
-}
-#result {
-    margin-top: 20px;<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<link rel="apple-touch-icon" href="icon.png">
-<title>Brawlers Nightmare</title>
-
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0e0e0e;
-    color: #eee;
     font-size: 20px;
     padding: 15px;
 }
@@ -263,7 +241,7 @@ function suggest() {
     const CLOSED_LANE = ["Shelly","Mortis","Edgar","Shade"];
     const CLOSED_MID  = ["Spike","Jacky","Poco"];
     const OPEN_LANE   = ["Piper","Edgar","Mandy"];
-    const OPEN_MID    = ["Spike","Mr. P","EMZ"];
+    const OPEN_MID    = ["Mr. P","Piper","EMZ"];
 
     const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
     const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
@@ -306,4 +284,3 @@ window.onload = () => {
 
 </body>
 </html>
-
