@@ -144,12 +144,12 @@ function suggest() {
     enemies.forEach(enemy => {
 
     if (enemy === "edgar" || enemy === "mortis" || enemy === "fang" || enemy === "sam") {
-        addPick("shelly"); // strong close-range burst
-        addPick("gale");   // mid-range control, knockback
+        addPick("Shelly"); // strong close-range burst
+        addPick("Gale");   // mid-range control, knockback
         if (mapType !== "closed") {
-            addPick("spike");    // safe ranged poke on open maps
+            addPick("Spike");    // safe ranged poke on open maps
         } else {
-            addPick("colette");  // melee-range burst on tight/closed maps
+            addPick("Colette");  // melee-range burst on tight/closed maps
         }
     }
     else if (
@@ -159,7 +159,6 @@ function suggest() {
         addPick("Colette");
         addPick("Spike");
         addPick("Shelly");
-        addPick("Rico");
     }
 //BIBI
     else if (enemy === "bibi") {
@@ -242,24 +241,9 @@ function suggest() {
         addPick("Edgar");
 		addPick("Crow");
     }
-	else if (enemy === "bea") {
-        addPick("Mortis");
-        addPick("Edgar");
-		addPick("Crow");
-    }
 	else if (enemy === "bo") {
         addPick("Mortis");
         addPick("Edgar");
-    }
-	else if (enemy === "bea") {
-        addPick("Mortis");
-        addPick("Edgar");
-		addPick("Crow");
-    }
-	else if (enemy === "bonnie") {
-        addPick("Spike");
-        addPick("Shelly");
-		addPick("Surge");
     }
 	else if (enemy === "bonnie") {
         addPick("Spike");
@@ -283,7 +267,6 @@ function suggest() {
 	else if (enemy === "mortis") {
         addPick("Shelly");
         addPick("Bull");
-		addPick("Surge");
     }
 });
 
@@ -292,7 +275,7 @@ function suggest() {
     const CLOSED_LANE = ["Shelly","Mortis","Edgar","Shade"];
     const CLOSED_MID  = ["Spike","Jacky","Poco"];
     const OPEN_LANE   = ["Piper","Edgar","Mandy"];
-    const OPEN_MID    = ["Spike","Mr. P","EMZ"];
+    const OPEN_MID    = ["Mr. P","Spike","EMZ"];
 
     const fallbackLane = mapType === "closed" ? CLOSED_LANE : OPEN_LANE;
     const fallbackMid  = mapType === "closed" ? CLOSED_MID  : OPEN_MID;
